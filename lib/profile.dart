@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meditation_app_flutterfinalproject/login_screen.dart'; // Import your LoginScreen
+import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
