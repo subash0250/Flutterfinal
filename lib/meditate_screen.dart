@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:meditation/common/color_extension.dart';
-import 'package:meditation/screen/home/reminders_screen.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/reminders_screen.dart';
 
 class MeditateScreen extends StatefulWidget {
   const MeditateScreen({super.key});
