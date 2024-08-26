@@ -86,7 +86,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(height: 8),
                           RoundButton(
                             title: "GET STARTED",
-                            height: 40, // Adjusted height for smaller button
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(

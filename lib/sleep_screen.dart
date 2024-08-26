@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/common/color_extension.dart';
-import 'package:meditation/screen/sleep/sleep_stories_detail_screen.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/sleep_stories_detail_screen.dart';
 
 class SleepScreen extends StatefulWidget {
   const SleepScreen({super.key});
