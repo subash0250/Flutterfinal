@@ -152,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 20),
                     itemCount: rArr.length,
                   ),
-                )
+                ),
+                const SizedBox(height: 20), // Add some spacing at the end
               ],
             ),
           ),
@@ -161,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildCourseCard({Color color, String image, String title, String subtitle}) {
+  Widget buildCourseCard({required Color color, required String image, required String title, required String subtitle}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
