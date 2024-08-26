@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/common/color_extension.dart';
-import 'package:meditation/common_widget/tab_button.dart';
-import 'package:meditation/screen/home/home_screen.dart';
-import 'package:meditation/screen/meditate/meditate_screen.dart';
-import 'package:meditation/screen/music/music_screen.dart';
-import 'package:meditation/screen/sleep/sleep_screen.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/tab_button.dart';
+import 'package:meditation_app_flutterfinalproject/home_screen.dart';
+import 'package:meditation_app_flutterfinalproject/meditate_screen.dart';
+import 'package:meditation_app_flutterfinalproject/music_screen.dart';
+import 'package:meditation_app_flutterfinalproject/sleep_screen.dart';
 
 class MainTabViewScreen extends StatefulWidget {
   const MainTabViewScreen({super.key});
