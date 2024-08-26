@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/common/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 
 class TabButton extends StatelessWidget {
   final String icon;
@@ -41,7 +41,9 @@ class TabButton extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: isSelect ? Color.primary : Color.secondaryText,
+                color: isSelect ? Theme.of(context).primaryColor
+                    : Theme.of(context).colorScheme.secondary
+                ,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
