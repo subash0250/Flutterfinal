@@ -57,16 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    Text(
-                      "OR LOG IN WITH EMAIL",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: TColor.secondaryText,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 35),
                     RoundTextField(hintText: "Email address"),
                     const SizedBox(height: 20),
                     RoundTextField(

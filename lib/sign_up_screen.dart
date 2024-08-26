@@ -59,18 +59,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     const SizedBox(height: 35),
-
-                    // Login with Email section
-                    Text(
-                      "LOG IN WITH EMAIL",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: TColor.secondaryText,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 35),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
@@ -113,36 +101,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             elevation: 0,
                             color: const Color(0xff8E97FD),
                             shape: CircleBorder(), // Make it circular
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/img/fb.png',
-                                  width: 24, // Adjusted icon size
-                                  height: 24, // Adjusted icon size
-                                ),
-                              ],
+                            child: Image.asset(
+                              'assets/img/fb.png',
+                              width: 24, // Adjusted icon size
+                              height: 24, // Adjusted icon size
                             ),
                           ),
                         ),
 
                         // Google button
-                        MaterialButton(
-                          onPressed: () {},
-                          minWidth: 50, // Set a minimum width for small round button
-                          height: 50, // Set a small height for round button
-                          elevation: 0,
-                          color: Colors.white,
-                          shape: CircleBorder(), // Make it circular
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/img/google.png',
-                                width: 24, // Adjusted icon size
-                                height: 24, // Adjusted icon size
-                              ),
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10), // Spacing between buttons
+                          child: MaterialButton(
+                            onPressed: () {},
+                            minWidth: 50, // Set a minimum width for small round button
+                            height: 50, // Set a small height for round button
+                            elevation: 0,
+                            color: Colors.white,
+                            shape: CircleBorder(), // Make it circular
+                            child: Image.asset(
+                              'assets/img/google.png',
+                              width: 24, // Adjusted icon size
+                              height: 24, // Adjusted icon size
+                            ),
                           ),
                         ),
                       ],
