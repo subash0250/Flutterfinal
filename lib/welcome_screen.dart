@@ -54,15 +54,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    Text(
-                      "Explore the app, Find some peace of mind to prepare for meditation.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: TColor.primaryTextW,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
                     RoundButton(
                       title: "GET STARTED",
                       type: RoundButtonType.secondary,

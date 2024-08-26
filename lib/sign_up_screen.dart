@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
 import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
-import 'package:meditation_app_flutterfinalproject/welcome_screen.dart';
-import 'user_model.dart'; // Import the user model
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -57,19 +57,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _registerUser() async {
-    // Create a UserModel object
-    UserModel user = UserModel(
-      username: _usernameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      phoneNumber: _phoneController.text,
-      address: _addressController.text,
-      gender: _selectedGender!,
-    );
+    final DatabaseReference database = FirebaseDatabase.instance.ref();
+    String userId = _emailController.text;
 
-    // Save user data to Firebase Realtime Database
-    DatabaseReference ref = FirebaseDatabase.instance.ref("users");
-    await ref.push().set(user.toJson());
+    // Create a map with user data
+    Map<String, dynamic> userData = {
+      'username': _usernameController.text,
+      'email': _emailController.text,
+      'password': _passwordController.text,
+      'phone': _phoneController.text,
+      'address': _addressController.text,
+      'gender': _selectedGender,
+    };
+
+
+    await database.child('users').child(userId).set(userData);
   }
 
   @override
@@ -165,72 +167,99 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           const SizedBox(height: 20),
-                          RoundButton(
-                            title: "GET STARTED",
+                      SizedBox(
+                        width: 250,
+                        child: RoundButton(
+                            title: "Sign UP",
                             onPressed: () async {
                               if (_validateFields()) {
                                 await _registerUser();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                    const WelcomeScreen(),
+                                    builder: (context) => const LoginScreen(),
                                   ),
                                 );
                               } else {
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
-                                        'Please fill in all fields before proceeding.'),
+                                        'All feilds are mandatary'),
                                   ),
                                 );
                               }
                             },
                           ),
+                      ),
                           const SizedBox(height: 25),
                         ],
                       ),
                     ),
-
-                    // Row for Facebook and Google buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Facebook button
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 10), // Spacing between buttons
+                          padding: const EdgeInsets.only(right: 10),
                           child: MaterialButton(
                             onPressed: () {},
-                            minWidth: 50, // Set a minimum width for small round button
-                            height: 50, // Set a small height for round button
+                            minWidth: 50,
+                            height: 50,
                             elevation: 0,
                             color: const Color(0xff8E97FD),
-                            shape:
-                            const CircleBorder(), // Make it circular
+                            shape: const CircleBorder(),
                             child: Image.asset(
                               'assets/img/fb.png',
-                              width: 24, // Adjusted icon size
-                              height: 24, // Adjusted icon size
+                              width: 24,
+                              height: 24,
                             ),
                           ),
                         ),
 
                         // Google button
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10), // Spacing between buttons
+                          padding: const EdgeInsets.only(left: 10),
                           child: MaterialButton(
                             onPressed: () {},
-                            minWidth: 50, // Set a minimum width for small round button
-                            height: 50, // Set a small height for round button
+                            minWidth: 50,
+                            height: 50,
                             elevation: 0,
                             color: Colors.white,
-                            shape:
-                            const CircleBorder(), // Make it circular
+                            shape: const CircleBorder(),
                             child: Image.asset(
                               'assets/img/google.png',
                               width: 24, // Adjusted icon size
                               height: 24, // Adjusted icon size
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            color: TColor.secondaryText,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
+                          },
+                          child: Text(
+                            "SIGN IN",
+                            style: TextStyle(
+                              color: TColor.primary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
