@@ -4,6 +4,8 @@ import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
 import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,6 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   String? _selectedGender;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
   void dispose() {
@@ -39,20 +43,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _selectedGender != null;
   }
 
-
-
   Future<void> _registerUser() async {
-    final DatabaseReference database = FirebaseDatabase.instance.ref();
-    String userId = _emailController.text.replaceAll('@', '_').replaceAll('.', '_');
-    Map<String, dynamic> userData = {
-      'username': _usernameController.text,
-      'email': _emailController.text,
-      'phone': _phoneController.text,
-      'gender': _selectedGender,
-      'address': _addressController.text,
-    };
+    if (_validateFields()) {
+      try {
+        // Create a new user
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
 
-    await database.child('users').child(userId).set(userData);
+        // Prepare user data
+        String userId = userCredential.user!.uid;
+        Map<String, dynamic> userData = {
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'phone': _phoneController.text,
+          'gender': _selectedGender,
+          'address': _addressController.text,
+        };
+
+        // Store user data in the Firebase Realtime Database
+        await _database.child('users').child(userId).set(userData);
+
+        // Navigate to Login screen or Home screen after successful registration
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      } catch (e) {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to sign up: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('All fields are mandatory.'),
+        ),
+      );
+    }
   }
 
   @override
@@ -118,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: true,
                             controller: _passwordController,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 20),
                           RoundTextField(
                             hintText: "Phone number",
                             controller: _phoneController,
@@ -152,23 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 250,
                             child: RoundButton(
                               title: "Sign Up",
-                              onPressed: () async {
-                                if (_validateFields()) {
-                                  await _registerUser();
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginScreen(),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          'All fields are mandatory.'),
-                                    ),
-                                  );
-                                }
-                              },
+                              onPressed: _registerUser, // Call the registerUser method
                             ),
                           ),
                           const SizedBox(height: 25),
@@ -234,6 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               MaterialPageRoute(builder: (context) => const LoginScreen()),
                             );
                           },
+
                           child: Text(
                             "SIGN IN",
                             style: TextStyle(

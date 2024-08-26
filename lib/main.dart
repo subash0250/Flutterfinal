@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
 import 'package:meditation_app_flutterfinalproject/startup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -11,11 +12,10 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Meditation',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -28,7 +28,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: TColor.primary),
         useMaterial3: false,
       ),
-      home: const StartUpScreen(),
+      home: SplashScreen(),
+      routes: {
+        'Startup_screen': (context) => StartUpScreen(),
+      },
     );
   }
 }
