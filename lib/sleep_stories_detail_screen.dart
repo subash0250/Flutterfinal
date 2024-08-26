@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/common/color_extension.dart';
-import 'package:meditation/common_widget/round_button.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/round_button.dart';
 
 class SleepStoriesDetailScreen extends StatefulWidget {
   const SleepStoriesDetailScreen({super.key});
