@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 35),
                 Text(
-                  "Good Morning, Afsar",
+                  "Good Morning, Subash",
                   style: TextStyle(
                     color: TColor.primaryText,
                     fontSize: 24,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/profile.dart';
 import 'package:meditation_app_flutterfinalproject/tab_button.dart';
 import 'package:meditation_app_flutterfinalproject/home_screen.dart';
 import 'package:meditation_app_flutterfinalproject/meditate_screen.dart';
@@ -41,6 +42,7 @@ class _MainTabViewScreenState extends State<MainTabViewScreen> with SingleTicker
                 const SleepScreen(),
                 const MeditateScreen(),
                 const MusicScreen(),
+                const ProfileScreen(),
                 Container(color: Colors.red), // Placeholder for profile tab
               ],
             ),
@@ -85,7 +87,7 @@ class _MainTabViewScreenState extends State<MainTabViewScreen> with SingleTicker
               ),
               TabButton(
                 icon: "assets/img/profile_tab.png",
-                title: "Afsar",
+                title: "profile",
                 isSelect: selectTab == 4,
                 onPressed: () => changeTab(4),
               ),
