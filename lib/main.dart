@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 import 'package:meditation_app_flutterfinalproject/startup_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 

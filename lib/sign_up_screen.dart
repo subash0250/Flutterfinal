@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
-import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
 import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
 import 'package:meditation_app_flutterfinalproject/welcome_screen.dart';
+import 'user_model.dart'; // Import the user model
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -35,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (_usernameController.text.isEmpty) {
       isValid = false;
-      // Highlight error by showing a dialog or using setState to show error message below the field
     }
     if (_emailController.text.isEmpty) {
       isValid = false;
@@ -54,6 +54,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     return isValid;
+  }
+
+  Future<void> _registerUser() async {
+    // Create a UserModel object
+    UserModel user = UserModel(
+      username: _usernameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      phoneNumber: _phoneController.text,
+      address: _addressController.text,
+      gender: _selectedGender!,
+    );
+
+    // Save user data to Firebase Realtime Database
+    DatabaseReference ref = FirebaseDatabase.instance.ref("users");
+    await ref.push().set(user.toJson());
   }
 
   @override
@@ -149,12 +165,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           const SizedBox(height: 20),
-                      SizedBox(
-                        width: 200,
-                        child: RoundButton(
+                          RoundButton(
                             title: "GET STARTED",
-                            onPressed: () {
+                            onPressed: () async {
                               if (_validateFields()) {
+                                await _registerUser();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -162,7 +177,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                 );
                               } else {
-                                // You can show a Snackbar or Dialog to indicate there are empty fields
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -172,7 +186,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                           ),
-                      ),
                           const SizedBox(height: 25),
                         ],
                       ),
@@ -218,36 +231,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               'assets/img/google.png',
                               width: 24, // Adjusted icon size
                               height: 24, // Adjusted icon size
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already had an Account?",
-                          style: TextStyle(
-                            color: TColor.secondaryText,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LoginScreen()),
-                            );
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: TColor.primary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
