@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/common/color_extension.dart';
-import 'package:meditation/common_widget/round_button.dart';
-import 'package:meditation/common_widget/round_text_field.dart';
-import 'package:meditation/screen/home/welcome_screen.dart';
-import 'package:meditation/screen/login/sign_up_screen.dart';
+import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/round_button.dart';
+import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
+import 'package:meditation_app_flutterfinalproject/welcome_screen.dart';
+import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
