@@ -22,43 +22,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   String? _selectedGender;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _phoneController.dispose();
-    _addressController.dispose();
-    super.dispose();
-  }
-
-  bool _validateFields() {
-    return _usernameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty &&
-        _phoneController.text.isNotEmpty &&
-        _addressController.text.isNotEmpty &&
-        _selectedGender != null;
-  }
-
-
-
-  Future<void> _registerUser() async {
-    final DatabaseReference database = FirebaseDatabase.instance.ref();
-    await database.child('users');
-    String userId = _emailController.text.replaceAll('@', '_').replaceAll('.', '_');
-    Map<String, dynamic> userData = {
-      'username': _usernameController.text,
-      'email': _emailController.text,
-      'phone': _phoneController.text,
-      'gender': _selectedGender,
-      'address': _addressController.text,
-    };
-
-    await database.child('users').child(userId).set(userData);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: true,
                             controller: _passwordController,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 20),
                           RoundTextField(
                             hintText: "Phone number",
                             controller: _phoneController,
@@ -156,22 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 250,
                             child: RoundButton(
                               title: "Sign Up",
-                              onPressed: () async {
-                                if (_validateFields()) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginScreen(),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          'All fields are mandatory.'),
-                                    ),
-                                  );
-                                }
-                              },
+                              onPressed: _registerUser, // Call the registerUser method
                             ),
                           ),
                           const SizedBox(height: 25),
@@ -234,7 +186,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
                             );
                           },
                           child: Text(
@@ -258,8 +211,319 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
 
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  bool _validateFields() {
+    return _usernameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _phoneController.text.isNotEmpty &&
+        _addressController.text.isNotEmpty &&
+        _selectedGender != null;
+  }
+
+  Future<void> _registerUser() async {
+    if (_validateFields()) {
+      try {
+        UserCredential userCredential = await _auth
+            .createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+
+        // Prepare user data
+        String userId = userCredential.user!.uid;
+        Map<String, dynamic> userData = {
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'phone': _phoneController.text,
+          'gender': _selectedGender,
+          'address': _addressController.text,
+        };
+
+        // Store user data in the Firebase Realtime Database
+        await _database.child('users').child(userId).set(userData);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      } catch (e) {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to sign up: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('All fields are mandatory.'),
+        ),
+      );
+    }
+  }
+}
+//
+// class SignUpScreen extends StatefulWidget {
+//   const SignUpScreen({super.key});
+//
+//   @override
+//   State<SignUpScreen> createState() => _SignUpScreenState();
+// }
+//
+// class _SignUpScreenState extends State<SignUpScreen> {
+//   final TextEditingController _usernameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _phoneController = TextEditingController();
+//   final TextEditingController _addressController = TextEditingController();
+//   String? _selectedGender;
+//
+//   @override
+//   void dispose() {
+//     _usernameController.dispose();
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     _phoneController.dispose();
+//     _addressController.dispose();
+//     super.dispose();
+//   }
+//
+//   bool _validateFields() {
+//     return _usernameController.text.isNotEmpty &&
+//         _emailController.text.isNotEmpty &&
+//         _passwordController.text.isNotEmpty &&
+//         _phoneController.text.isNotEmpty &&
+//         _addressController.text.isNotEmpty &&
+//         _selectedGender != null;
+//   }
+//
+//
+//
+//   Future<void> _registerUser() async {
+//     final DatabaseReference database = FirebaseDatabase.instance.ref();
+//     await database.child('users');
+//     String userId = _emailController.text.replaceAll('@', '_').replaceAll('.', '_');
+//     Map<String, dynamic> userData = {
+//       'username': _usernameController.text,
+//       'email': _emailController.text,
+//       'phone': _phoneController.text,
+//       'gender': _selectedGender,
+//       'address': _addressController.text,
+//     };
+//
+//     await database.child('users').child(userId).set(userData);
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SingleChildScrollView(
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             Stack(
+//               alignment: Alignment.bottomCenter,
+//               children: [
+//                 Image.asset(
+//                   "assets/img/login_top.png",
+//                   width: double.maxFinite,
+//                   fit: BoxFit.fitWidth,
+//                 ),
+//                 Column(
+//                   children: [
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(horizontal: 20),
+//                       child: Row(
+//                         children: [
+//                           InkWell(
+//                             onTap: () {
+//                               Navigator.of(context).pop();
+//                             },
+//                             child: Image.asset(
+//                               "assets/img/back.png",
+//                               width: 55,
+//                               height: 55,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     const SizedBox(height: 25),
+//                     Text(
+//                       "Create your account",
+//                       style: TextStyle(
+//                         color: TColor.primaryText,
+//                         fontSize: 28,
+//                         fontWeight: FontWeight.w700,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 35),
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(horizontal: 20),
+//                       child: Column(
+//                         children: [
+//                           RoundTextField(
+//                             hintText: "Username",
+//                             controller: _usernameController,
+//                           ),
+//                           const SizedBox(height: 20),
+//                           RoundTextField(
+//                             hintText: "Email address",
+//                             controller: _emailController,
+//                           ),
+//                           const SizedBox(height: 20),
+//                           RoundTextField(
+//                             hintText: "Password",
+//                             obscureText: true,
+//                             controller: _passwordController,
+//                           ),
+//                           const SizedBox(height: 8),
+//                           RoundTextField(
+//                             hintText: "Phone number",
+//                             controller: _phoneController,
+//                           ),
+//                           const SizedBox(height: 20),
+//                           RoundTextField(
+//                             hintText: "Address",
+//                             controller: _addressController,
+//                           ),
+//                           const SizedBox(height: 20),
+//
+//                           // Gender selection
+//                           DropdownButtonFormField<String>(
+//                             value: _selectedGender,
+//                             hint: const Text("Select Gender"),
+//                             items: ['Male', 'Female', 'Other']
+//                                 .map<DropdownMenuItem<String>>((String value) {
+//                               return DropdownMenuItem<String>(
+//                                 value: value,
+//                                 child: Text(value),
+//                               );
+//                             }).toList(),
+//                             onChanged: (String? newValue) {
+//                               setState(() {
+//                                 _selectedGender = newValue;
+//                               });
+//                             },
+//                           ),
+//                           const SizedBox(height: 20),
+//                           SizedBox(
+//                             width: 250,
+//                             child: RoundButton(
+//                               title: "Sign Up",
+//                               onPressed: () async {
+//                                 if (_validateFields()) {
+//                                   Navigator.of(context).push(
+//                                     MaterialPageRoute(
+//                                       builder: (context) => const LoginScreen(),
+//                                     ),
+//                                   );
+//                                 } else {
+//                                   ScaffoldMessenger.of(context).showSnackBar(
+//                                     const SnackBar(
+//                                       content: Text(
+//                                           'All fields are mandatory.'),
+//                                     ),
+//                                   );
+//                                 }
+//                               },
+//                             ),
+//                           ),
+//                           const SizedBox(height: 25),
+//                         ],
+//                       ),
+//                     ),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         // Facebook button
+//                         Padding(
+//                           padding: const EdgeInsets.only(right: 10),
+//                           child: MaterialButton(
+//                             onPressed: () {},
+//                             minWidth: 50,
+//                             height: 50,
+//                             elevation: 0,
+//                             color: const Color(0xff8E97FD),
+//                             shape: const CircleBorder(),
+//                             child: Image.asset(
+//                               'assets/img/fb.png',
+//                               width: 24,
+//                               height: 24,
+//                             ),
+//                           ),
+//                         ),
+//
+//                         // Google button
+//                         Padding(
+//                           padding: const EdgeInsets.only(left: 10),
+//                           child: MaterialButton(
+//                             onPressed: () {},
+//                             minWidth: 50,
+//                             height: 50,
+//                             elevation: 0,
+//                             color: Colors.white,
+//                             shape: const CircleBorder(),
+//                             child: Image.asset(
+//                               'assets/img/google.png',
+//                               width: 24,
+//                               height: 24,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     const SizedBox(height: 20),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Text(
+//                           "Already have an account?",
+//                           style: TextStyle(
+//                             color: TColor.secondaryText,
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w600,
+//                           ),
+//                         ),
+//                         TextButton(
+//                           onPressed: () {
+//                             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(builder: (context) => const LoginScreen()),
+//                             );
+//                           },
+//                           child: Text(
+//                             "SIGN IN",
+//                             style: TextStyle(
+//                               color: TColor.primary,
+//                               fontSize: 14,
+//                               fontWeight: FontWeight.w600,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     const SizedBox(height: 20),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
 
 
 //

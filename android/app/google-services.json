@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "316929849470",
+    "firebase_url": "https://flutterfinal-edcd3-default-rtdb.firebaseio.com",
+    "project_id": "flutterfinal-edcd3",
+    "storage_bucket": "flutterfinal-edcd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316929849470:android:d6a80ae4b9a1ffe288002f",
+        "android_client_info": {
+          "package_name": "com.example.meditation_app_flutterfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsT5U3immydF4wTgYy8azOMHccFwNRDec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
