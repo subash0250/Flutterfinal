@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/forgot_password.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
 import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
 import 'package:meditation_app_flutterfinalproject/choose_topic_screen.dart';
@@ -149,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                      MaterialPageRoute(builder: (context) =>  ForgotPasswordScreen()),
                     );
                   },
                   child: Text(
