@@ -4,11 +4,14 @@ import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
 import 'package:meditation_app_flutterfinalproject/startup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
