@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
 import 'package:meditation_app_flutterfinalproject/round_text_feild.dart';
-import 'package:meditation_app_flutterfinalproject/welcome_screen.dart';
+import 'package:meditation_app_flutterfinalproject/choose_topic_screen.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (snapshot.exists) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          MaterialPageRoute(builder: (context) => const ChooseTopicScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

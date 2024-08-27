@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meditation_app_flutterfinalproject/choose_topic_screen.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
@@ -36,6 +37,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'Startup_screen': (context) => StartUpScreen(),
         'Signup_screen': (context) => SignUpScreen(),
+        'choosetopic': (context) => ChooseTopicScreen(),
+
       },
     );
   }

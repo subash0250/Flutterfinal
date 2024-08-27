@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
 import 'package:meditation_app_flutterfinalproject/round_button.dart';
-// import 'package:meditation_app_flutterfinalproject/reminders_screen.dart';
-// import 'package:meditation_app_flutterfinalproject/welcome_screen.dart';
 import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 class StartUpScreen extends StatefulWidget {
