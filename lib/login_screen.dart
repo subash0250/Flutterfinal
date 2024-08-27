@@ -132,6 +132,38 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             const SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+
+              children: [
+                Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    color: TColor.secondaryText,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                    );
+                  },
+                  child: Text(
+                    "Reset",
+                    style: TextStyle(
+                      color: TColor.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
             Text(
               "OR CONTINUE WITH",
               textAlign: TextAlign.center,

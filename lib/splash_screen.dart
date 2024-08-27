@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth package
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -16,14 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToNextScreen() async {
     await Future.delayed(Duration(seconds: 5), () {});
 
-
     User? user = FirebaseAuth.instance.currentUser;
-
     if (user != null) {
-
       Navigator.pushReplacementNamed(context, 'choosetopic');
     } else {
-
       Navigator.pushReplacementNamed(context, 'LoginPage');
     }
   }

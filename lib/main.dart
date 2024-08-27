@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app_flutterfinalproject/choose_topic_screen.dart';
 import 'package:meditation_app_flutterfinalproject/color_extension.dart';
+import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
-import 'package:meditation_app_flutterfinalproject/startup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -33,12 +33,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: TColor.primary),
         useMaterial3: false,
       ),
-      home: SplashScreen(),
+      initialRoute: '/',
       routes: {
-        'Startup_screen': (context) => StartUpScreen(),
-        'Signup_screen': (context) => SignUpScreen(),
+        '/': (context) => SplashScreen(),
+        'LoginPage': (context) => LoginScreen(),
         'choosetopic': (context) => ChooseTopicScreen(),
-
       },
     );
   }
