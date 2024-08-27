@@ -5,6 +5,7 @@ import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:meditation_app_flutterfinalproject/weather_screen.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         'LoginPage': (context) => LoginScreen(),
         'choosetopic': (context) => ChooseTopicScreen(),
+        'weather': (context) => WeatherScreen(),
       },
     );
   }

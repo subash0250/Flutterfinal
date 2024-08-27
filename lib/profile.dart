@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
-  bool _isEditing = false; // To toggle between edit and view mode
+  bool _isEditing = false;
 
   @override
   void initState() {
@@ -92,6 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false,
+
     );
   }
 
