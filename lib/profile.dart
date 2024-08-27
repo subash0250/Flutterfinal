@@ -165,44 +165,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             const Spacer(), // Pushes the buttons to the bottom
-            if (!_isEditing) ...[
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _isEditing = true; // Enter edit mode
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (!_isEditing) ...[
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _isEditing = true; // Enter edit mode
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
+                    child: const Text(
+                      'Edit Profile',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ] else ...[
+                  ElevatedButton(
+                    onPressed: _updateUserData,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
+                    child: const Text(
+                      'Save Changes',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+                ElevatedButton(
+                  onPressed: _logout,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    backgroundColor: Colors.red, // Customize the button color
+                  ),
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-                child: const Text(
-                  'Edit Profile',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ] else ...[
-              ElevatedButton(
-                onPressed: _updateUserData,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: const Text(
-                  'Save Changes',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _logout,
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                backgroundColor: Colors.red, // Customize the button color
-              ),
-              child: const Text(
-                'Logout',
-                style: TextStyle(fontSize: 16),
-              ),
+              ],
             ),
           ],
         ),
