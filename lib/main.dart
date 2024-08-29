@@ -5,7 +5,9 @@ import 'package:meditation_app_flutterfinalproject/login_screen.dart';
 import 'package:meditation_app_flutterfinalproject/sign_up_screen.dart';
 import 'package:meditation_app_flutterfinalproject/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:meditation_app_flutterfinalproject/topic_provider.dart';
 import 'package:meditation_app_flutterfinalproject/weather_screen.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -13,7 +15,9 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp( const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TopicProvider(),
+    child: MyApp(),));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
         'LoginPage': (context) => LoginScreen(),
         'choosetopic': (context) => ChooseTopicScreen(),
         'weather': (context) => WeatherScreen(),
+
       },
     );
   }
